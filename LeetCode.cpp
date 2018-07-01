@@ -99,6 +99,47 @@ TreeNode* mergeTrees(TreeNode* t1, TreeNode* t2) {
 	return loot;
 }
 
+void GoNext(TreeNode* root, int& height)
+{
+	if (root)
+	{
+		height++;
+		int left = 0;
+		int right = 0;
+		GoNext(root->left, left);
+		GoNext(root->right, right);
+		height += (left > right ? left : right);
+	}
+}
+
+int maxDepth(TreeNode* root) 
+{
+	int height = 0;
+	GoNext(root, height);
+	return height;
+}
+
+// code 55
+bool findIndex(vector<int>& nums, int tag)
+{
+	if (tag == 0)
+		return true;
+
+	if (tag < 0)
+		return false;
+
+	for (int i = 0; i < tag; i++)
+	{
+		if (nums[i] + i >= tag)
+			return findIndex(nums, i);
+	}
+	return false;
+}
+
+bool canJump(vector<int>& nums) 
+{
+	return findIndex(nums, (nums.size() - 1));
+}
 
 int main()
 {
